@@ -1,43 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <cs50.h>
 
-// TODO: create ceaser algorithm with ASCII table
-
-void cypher(int key);
+int cypher(int key);
 
 int main(int argc, string argv[])
 {
-    int key = atoi(argv[1]);
-    //Ensure amount of arguments
     if (argc != 2)
     {
         printf("Enter a valid argument\n");
         return 1;
     }
-    //Check if argument is decimal type
-    else if (atoi(argv[1]) < 1)
+    int key = atoi(argv[1]);
+    if (key < 0)
     {
-        printf("Usage: ./caesar key\n");
+        printf("Usage ./caesar key\n");
         return 1;
     }
-    // run algorithm
     else
         cypher(key);
 }
 
-void cypher(int key)
+int cypher(int key)
 {
     string text;
-    int textLength;
-    do
+    text = get_string("plaintext: ");
+
+    for (int i = 0; i < strlen(text); i++)
     {
-        text = get_string("plaintext: ");
-    } while (text == NULL);
-    {
-        for (int i = 0; i < strlen(text); i++)
-            text[i] += key;
-        printf("%s\n", text);
+        if isupper (text[i])
+            printf("%c", (((text[i] += key) - 65) % 26) + 65);
+        else if islower (text[i])
+            printf("%c", (((text[i] += key) - 97) % 26) + 97);
+        else
+            printf("%c", text[i]);
     }
+    printf("\n");
+    return 0;
 }

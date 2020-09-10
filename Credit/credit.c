@@ -2,47 +2,60 @@
 #include <cs50.h>
 #include <string.h>
 
-int luhn();
-void validator(void);
+void luhn(long n);
+void verify(void);
+
+// MASTERCARD: 16-Digit #'s, Start with: 51, 52, 53, 54, or 55
+// VISA: 13-16-Digit #'s, Start with: 4
+// AMEX: 15-Digit #'s, Star with: 34 or 37
 
 int main(void)
 {
-  validator();
+    verify();
+    return 0;
 }
 
-// implement validator logic after luhn
-void validator(void)
+void verify(void)
 {
-  char res[2];
-  long minima = 1000000000000;
-  long maxima = 1000000000000000;
-  long credit;
-  do
-  {
-    credit = get_long("Number: ");
-  } while (credit < minima || credit > maxima);
-  {
-    char numString[16];
-    sprintf(numString, "%ld", credit);
-    sprintf(res, "%i", luhn(numString));
-    if(res[1] != 0) printf("INVALID\n");
-    else if((numString[0] == 3 && numString[1] == 4) || (numString[0] == 3 && numString[1] == 7))
-      printf("AMEX\n");
-    else if(numString[0] == 5 && (numString[1] == 1 || numString[1] == 2 || numString[1] == 3 || numString[1] == 4 || numString[1] == 5))
-      printf("MASTERCARD\n");
-    else printf("VISA\n");
-  }
+    long long number;
+    do
+    {
+        number = get_long_long("Card Number: ");
+    } while (number < 34e11 || number > 55e14);
+    {
+        luhn(number);
+    }
 }
 
-int luhn(char numString[])
+void luhn(long n)
 {
-  int cummulator1 = 0;
-  int cummulator2 = 0;
-  for (int i = 0; i < strlen(numString); i += 2)
-    cummulator1 += (numString[i] - '0') * 2;
-  for (int i = 1; i < strlen(numString); i += 2)
-    cummulator2 += (numString[i] - '0');
-  return cummulator1 + cummulator2;
+    int values[16];
+    int counter = 0;
+    int final = 0;
+    while (n)
+    {
+        values[counter] = n % 10;
+        n /= 10;
+        counter++;
+    }
+    int x = values[counter - 1];
+    int y = values[counter - 2];
+    for (int i = 1; i < counter; i += 2)
+    {
+        values[i] *= 2;
+        if (values[i] > 9)
+            values[i] -= 9;
+    }
+    for (int i = 1; i < counter; i++)
+        final += values[i];
+    if ((final % 10) != values[0])
+        printf("INVALID\n");
+    else if (x == 5 && y < 5)
+        printf("MASTERCARD\n");
+    else if (x == 4)
+        printf("VISA\n");
+    else if (x == 3 && (y == 4 || y == 7))
+        printf("AMEX\n");
 }
-
-// 378282246310005
+// 4556737586899855
+//

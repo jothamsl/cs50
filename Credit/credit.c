@@ -31,31 +31,32 @@ void luhn(long n)
 {
     int values[16];
     int counter = 0;
-    int final = 0;
     while (n)
     {
         values[counter] = n % 10;
         n /= 10;
         counter++;
     }
+    int innerValues[counter];
     int x = values[counter - 1];
     int y = values[counter - 2];
     for (int i = 1; i < counter; i += 2)
-    {
         values[i] *= 2;
+    for (int i = 0; i < counter; i++)
+    {
         if (values[i] > 9)
-            values[i] -= 9;
+        {
+            while (n)
+            {
+                innerValues[counter] = n % 10;
+                n /= 10;
+            }
+        }
     }
-    for (int i = 1; i < counter; i++)
-        final += values[i];
-    if ((final % 10) != values[0])
-        printf("INVALID\n");
-    else if (x == 5 && y < 5)
-        printf("MASTERCARD\n");
-    else if (x == 4)
-        printf("VISA\n");
-    else if (x == 3 && (y == 4 || y == 7))
-        printf("AMEX\n");
+    // adding all of product's digits
+    for (int i = 0; i < counter; i++) {
+
+    }
 }
 // 4556737586899855
 //

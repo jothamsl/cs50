@@ -1,5 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 
@@ -80,20 +81,22 @@ bool vote(string name)
 // Print the winner (or winners) of the election
 void print_winner(void)
 {
-    int votes[MAX];
+    int max = candidates[0].votes;
+    string maxN = candidates[0].name;
     for (int i = 0; i < candidate_count; i++)
-        votes[i] = candidates[i].votes;
-
-    int max = votes[0], indx = 0;
-    int positions[candidate_count];
-    for (int i = 1; i < candidate_count; i++)
     {
-        if (votes[i] > max)
+        if (candidates[i].votes > max)
         {
-            max = (int)votes[i];
-            indx = i;
+            max = candidates[i].votes;
+            maxN = candidates[i].name;
+            printf("%s\n", maxN);
         }
     }
-    // if (sizeof(positions) > 1)
-    printf("The winner is: %s", candidates[indx].name);
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].votes == max)
+        {
+            printf("%s\n", candidates[i].name);
+        }
+    }
 }

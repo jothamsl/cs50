@@ -1,0 +1,20 @@
+[v] Implement ceasar cypher algorithm
+---[v] Program must accept a single command-line 
+      argument which must be a non-negative integer
+      
+------[v] If program is executed without any command-line 
+         arguments or with more than a single argument, print
+         an error message and return from main a value of 1.
+
+------[v] If any of the characters in the command-line argument
+         is not a decimal digit, the program should print "Usage ./caesar key"
+         and return 1.
+
+---[v] Program must output "plaintext:" then prompt user for a string of plaintext
+---[v] Program must output "ciphertext:" followed by the plaintext's corresponding
+      cyphertext with each alphabetical character in the plaintext "rotated" by k 
+      positions; non-alphabetical characters should be outputted unchanged.
+
+---[v] Program must preserve caesar case
+
+---[v] After outputting cyphertext, program should exit by returning 0 from main.

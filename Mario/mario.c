@@ -7,12 +7,18 @@ int main(void)
     do
     {
         height = get_int("height: ");
-    } while (height < 1);
+    } while (height <= 0 || height > 8);
     {
-        for (int i = 1; i < height; i++)
+        for (int i = 1; i <= height; i++)
         {
-            for (int k = height - 1; k > i; k--) printf(" ");
-            for (int j = 0; j < i; j++) printf("#");
+            for (int j = height; j > i; j--)
+            {
+                printf(" ");
+            }
+            for (int k = 0; k < i; k++)
+            {
+                printf("#");
+            }
             printf("\n");
         }
     }
